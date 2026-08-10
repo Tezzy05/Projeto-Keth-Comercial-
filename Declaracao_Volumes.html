@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Declaração de Volumes</title>
+<style>
+:root{--bg:#f4f7f9;--card:#fff;--text:#17324d;--muted:#6b7b8c;--primary:#087f5b;--primary2:#0b9a70;--border:#dfe7ed;--danger:#c0392b;--shadow:0 10px 30px rgba(25,55,80,.08)}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+.container{max-width:1050px;margin:35px auto;padding:0 20px}.header{background:linear-gradient(135deg,#0b6b50,#0b9a70);color:#fff;border-radius:18px;padding:28px 30px;box-shadow:var(--shadow)}
+.header h1{margin:0 0 8px;font-size:28px}.header p{margin:0;opacity:.9}
+.card{background:var(--card);margin-top:18px;border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.step{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);font-weight:bold;margin-bottom:7px}
+h2{margin:0 0 18px;font-size:21px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;font-weight:bold;margin-bottom:7px;font-size:14px}.field input,.field select{width:100%;padding:12px 13px;border:1px solid #ccd8e0;border-radius:10px;font-size:15px;background:#fff}.field input:focus,.field select:focus{outline:2px solid rgba(8,127,91,.18);border-color:var(--primary)}
+.materials{display:grid;grid-template-columns:1fr 1fr;gap:12px}.material{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 14px;border:1px solid var(--border);border-radius:11px;background:#fbfcfd}.material span{font-weight:600;font-size:14px}.material input{width:135px;text-align:right;padding:10px;border:1px solid #ccd8e0;border-radius:8px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:bold;cursor:pointer}.primary{background:var(--primary);color:#fff}.primary:hover{background:var(--primary2)}.secondary{background:#eef3f6;color:var(--text)}.danger{background:#fff0ee;color:var(--danger)}
+.summary{display:flex;justify-content:space-between;align-items:center;background:#f0faf6;border:1px solid #cdeee2;padding:14px 16px;border-radius:11px;margin-top:18px}.summary strong{font-size:18px}.states{margin-top:14px}.state-row{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;background:#fff}.state-info{display:flex;gap:12px;align-items:center}.badge{background:#e5f7f0;color:#087f5b;border-radius:20px;padding:5px 9px;font-size:12px;font-weight:bold}.empty{color:var(--muted);padding:10px 0}.notice{padding:12px 14px;border-radius:10px;margin-top:12px;display:none}.error{background:#fff0ee;color:#a93226}.ok{background:#eefaf5;color:#087f5b}.progress{height:9px;background:#e5ebef;border-radius:10px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--primary);width:0%;transition:.25s}.footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:700px){.grid,.materials{grid-template-columns:1fr}.container{margin-top:15px}.header{padding:22px}.card{padding:18px}.material input{width:115px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Declaração de Volumes</h1>
+    <p>Preencha os dados por estado. Ao finalizar, o arquivo Excel será gerado no padrão de importação.</p>
+  </div>
+
+  <div class="card">
+    <div class="step">Etapa 1</div>
+    <h2>Ano de compensação</h2>
+    <div class="field" style="max-width:320px">
+      <label for="year">Ano</label>
+      <select id="year"></select>
+    </div>
+    <div class="notice error" id="yearError"></div>
+  </div>
+
+  <div class="card">
+    <div class="step">Etapa 2</div>
+    <h2>Informar estado</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="state">Estado</label>
+        <select id="state"></select>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <label style="font-weight:bold;font-size:14px;display:block;margin-bottom:10px">Peso gerado (Ton.)</label>
+      <div class="materials" id="materials"></div>
+    </div>
+    <div class="summary"><span>Total do estado</span><strong id="total">0,00 t</strong></div>
+    <div class="actions">
+      <button class="btn primary" id="add">＋ Adicionar estado</button>
+      <button class="btn secondary" id="clear">Limpar campos</button>
+    </div>
+    <div class="notice error" id="formError"></div>
+  </div>
+
+  <div class="card">
+    <div class="step">Etapa 3</div>
+    <h2>Estados preenchidos</h2>
+    <div><strong id="count">0 de 27 estados</strong></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="states" id="states"></div>
+  </div>
+
+  <div class="card">
+    <div class="step">Etapa 4</div>
+    <h2>Finalizar</h2>
+    <p style="color:var(--muted)">Revise os estados informados e gere o arquivo Excel para envio ao sistema.</p>
+    <div class="actions">
+      <button class="btn primary" id="export">⬇ Gerar Excel para o sistema</button>
+    </div>
+    <div class="notice ok" id="success"></div>
+  </div>
+  <div class="footer">Protótipo — Declaração de Volumes</div>
+</div>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+const YEARS = [2019,2020,2021,2022,2023,2024,2025,2026];
+const STATES = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"];
+const MATERIALS = ["PAPEL/PAPELÃO", "PLÁSTICO", "VIDRO", "AÇO/FERRO", "ALUMÍNIO", "LONGA VIDA", "ISOPOR", "BOPP", "AEROSSOL", "OUTRO MATERIAL (RENOMEAR)"];
+const data = {};
+let editingState = null;
+
+const year = document.getElementById('year');
+const state = document.getElementById('state');
+const materialsBox = document.getElementById('materials');
+const totalEl = document.getElementById('total');
+const statesBox = document.getElementById('states');
+const countEl = document.getElementById('count');
+const bar = document.getElementById('bar');
+
+YEARS.forEach(y => { const o=document.createElement('option'); o.value=y;o.textContent=y;year.appendChild(o); });
+STATES.forEach(s => { const o=document.createElement('option'); o.value=s;o.textContent=s;state.appendChild(o); });
+MATERIALS.forEach((m,i)=>{
+  const d=document.createElement('div');d.className='material';
+  d.innerHTML=`<span>${m}</span><input type="text" inputmode="decimal" data-i="${i}" placeholder="0,00" value="0">`;
+  materialsBox.appendChild(d);
+});
+function num(v){ if(v===null||v===undefined||v==='')return 0; return Number(String(v).trim().replace(/\./g,'').replace(',','.')) || 0; }
+function fmt(v){ return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function values(){ return [...materialsBox.querySelectorAll('input')].map(i=>num(i.value)); }
+function showError(msg){const e=document.getElementById('formError');e.textContent=msg;e.style.display='block';setTimeout(()=>e.style.display='none',3500);}
+function clearFields(){materialsBox.querySelectorAll('input').forEach(i=>i.value='0');editingState=null;document.getElementById('add').textContent='＋ Adicionar estado';totalEl.textContent='0,00 t';}
+function renderStates(){
+  const arr=data[year.value]||{};
+  const keys=Object.keys(arr);
+  countEl.textContent=`${keys.length} de 27 estados`;
+  bar.style.width=(keys.length/27*100)+'%';
+  statesBox.innerHTML='';
+  if(!keys.length){statesBox.innerHTML='<div class="empty">Nenhum estado informado ainda.</div>';return;}
+  keys.forEach(s=>{
+    const vals=arr[s]; const total=vals.reduce((a,b)=>a+b,0);
+    const row=document.createElement('div');row.className='state-row';
+    row.innerHTML=`<div class="state-info"><span class="badge">✓</span><strong>${s}</strong><span style="color:#6b7b8c">${fmt(total)} t</span></div>
+      <div class="actions" style="margin:0"><button class="btn secondary" data-edit="${s}">Editar</button><button class="btn danger" data-del="${s}">Remover</button></div>`;
+    statesBox.appendChild(row);
+  });
+  statesBox.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>loadState(b.dataset.edit));
+  statesBox.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{delete data[year.value][b.dataset.del];renderStates();});
+}
+function loadState(s){
+  editingState=s; state.value=s;
+  const vals=data[year.value][s]; materialsBox.querySelectorAll('input').forEach((i,k)=>i.value=String(vals[k]).replace('.',','));
+  document.getElementById('add').textContent='✓ Atualizar estado'; updateTotal();
+  window.scrollTo({top:document.querySelector('.card:nth-of-type(2)').offsetTop-15,behavior:'smooth'});
+}
+function updateTotal(){totalEl.textContent=fmt(values().reduce((a,b)=>a+b,0))+' t';}
+materialsBox.addEventListener('input',updateTotal);
+year.addEventListener('change',()=>{clearFields();renderStates();});
+document.getElementById('clear').onclick=clearFields;
+document.getElementById('add').onclick=()=>{
+  const s=state.value, vals=values();
+  if(vals.some(v=>v<0)){showError('Não são permitidos valores negativos.');return;}
+  if(vals.every(v=>v===0)){showError('Informe pelo menos um material com valor maior que zero.');return;}
+  data[year.value] ||= {};
+  if(!editingState && data[year.value][s]){showError('Este estado já foi informado. Use Editar para alterar os valores.');return;}
+  if(editingState && editingState!==s) delete data[year.value][editingState];
+  data[year.value][s]=vals; clearFields(); renderStates();
+};
+
+async function exportExcel(){
+  const yearsWithData=Object.keys(data).filter(y=>Object.keys(data[y]||{}).length);
+  if(!yearsWithData.length){showError('Adicione pelo menos um estado antes de gerar o Excel.');return;}
+  const response = await fetch('Declaracao_volume_embalagens_modelo.xlsx');
+  if(!response.ok){showError('Não foi possível localizar o arquivo modelo do Excel. Mantenha o HTML e o modelo na mesma pasta.');return;}
+  const buf=await response.arrayBuffer();
+  const wb=XLSX.read(buf,{type:'array'});
+  yearsWithData.forEach(y=>{
+    if(!wb.Sheets[y]) return;
+    const ws=wb.Sheets[y];
+    Object.entries(data[y]).forEach(([s,vals])=>{
+      const r=STATES.indexOf(s)+5;
+      vals.forEach((v,i)=>XLSX.utils.sheet_add_aoa(ws,[[v]],{origin:{r:r-1,c:i+1}}));
+    });
+  });
+  // Remove 2026 if no data? Keep all original/model sheets because the system reads tabs separately.
+  XLSX.writeFile(wb,`Declaracao_volume_embalagens_preenchida.xlsx`);
+  const ok=document.getElementById('success');ok.textContent='Excel gerado com sucesso. O arquivo mantém as guias e a estrutura do modelo.';ok.style.display='block';
+}
+document.getElementById('export').onclick=exportExcel;
+renderStates(); updateTotal();
+</script>
+</body>
+</html>
