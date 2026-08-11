@@ -307,11 +307,151 @@ render();
 };
 
 async function exportExcel(){
-const years=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
 
-if(!years.length){
-error("Adicione pelo menos um estado antes de gerar o Excel.");
-return;
+    const years=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
+
+    if(!years.length){
+        error("Adicione pelo menos um estado antes de gerar o Excel.");
+        return;
+    }
+
+    exportBtn.disabled=true;
+    exportBtn.textContent="⏳ Gerando Excel...";
+
+    try{
+
+        if(typeof XLSX==="undefined"){
+            throw new Error("A biblioteca Excel não foi carregada.");
+        }
+
+        const modelFile="Declaracao_volume_embalagens_modelo.xlsx";
+
+        const response=await fetch(
+            modelFile+"?v="+Date.now(),
+            {
+                method:"GET",
+                cache:"no-store"
+            }
+        );
+
+        if(!response.ok){
+            throw new Error(
+                "O Excel modelo não foi encontrado no GitHub. Verifique o nome do arquivo e se ele está na mesma pasta do HTML."
+            );
+        }
+
+        const buffer=await response.arrayBuffer();
+
+        if(!buffer||buffer.byteLength===0){
+            throw new Error("O arquivo Excel modelo está vazio.");
+        }
+
+        const workbook=XLSX.read(
+            buffer,
+            {
+                type:"array",
+                cellStyles:true
+            }
+        );
+
+        years.forEach(y=>{
+
+            const ws=workbook.Sheets[String(y)];
+
+            if(!ws){
+                throw new Error(
+                    'A guia "'+y+'" não existe no Excel modelo.'
+                );
+            }
+
+            Object.entries(data[y]).forEach(([s,vals])=>{
+
+                const stateIndex=STATES.indexOf(s);
+
+                if(stateIndex===-1){
+                    throw new Error(
+                        'O estado "'+s+'" não foi encontrado na lista padrão.'
+                    );
+                }
+
+                const row=stateIndex+5;
+
+                vals.forEach((value,index)=>{
+
+                    const cell=XLSX.utils.encode_cell({
+                        r:row-1,
+                        c:index+1
+                    });
+
+                    ws[cell]={
+                        t:"n",
+                        v:Number(value)
+                    };
+
+                });
+
+            });
+
+        });
+
+        const output=XLSX.write(
+            workbook,
+            {
+                bookType:"xlsx",
+                type:"array",
+                compression:true
+            }
+        );
+
+        const blob=new Blob(
+            [output],
+            {
+                type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            }
+        );
+
+        const url=URL.createObjectURL(blob);
+
+        const link=document.createElement("a");
+
+        link.href=url;
+
+        link.download="Declaracao_volume_embalagens_preenchida.xlsx";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+        setTimeout(()=>{
+            URL.revokeObjectURL(url);
+        },1000);
+
+        const success=document.getElementById("success");
+
+        success.textContent=
+            "Excel gerado com sucesso: Declaracao_volume_embalagens_preenchida.xlsx";
+
+        success.style.display="block";
+
+    }catch(e){
+
+        console.error("Erro na exportação:",e);
+
+        error(
+            "Não foi possível gerar o Excel: "+e.message
+        );
+
+    }finally{
+
+        exportBtn.disabled=false;
+
+        exportBtn.textContent=
+            "⬇ Gerar Excel para o sistema";
+
+    }
+
 }
 
 exportBtn.disabled=true;
