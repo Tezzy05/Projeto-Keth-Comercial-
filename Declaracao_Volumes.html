@@ -322,7 +322,7 @@ try{
 if(typeof XLSX==="undefined")
 throw new Error("A biblioteca Excel não foi carregada.");
 
-const url=new URL("Declaracao_volume_embalagens_modelo.xlsx",window.location.href);
+const url=new URL("Declaracao_volume_embalagens.xlsx",window.location.href);
 const response=await fetch(url,{cache:"no-store"});
 
 if(!response.ok)
