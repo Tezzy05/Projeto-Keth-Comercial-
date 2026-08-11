@@ -308,20 +308,23 @@ clearFields();
 render();
 };
 
-async funciona exportExcel(){
-const yers=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
+async function exportExcel(){
+const years=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
 
 if(!years.length){
-error("Adicione ao menos um estado para seguir.");
-return:}
-    
+error("Adicione pelo menos um estado antes de gerar o Excel.");
+return;
+}
+
 exportBtn.disabled=true;
 exportBtn.textContent="⏳ Gerando Excel...";
+
 try{
+
 if(typeof XLSX==="undefined")
 throw new Error("A biblioteca Excel não foi carregada.");
 
-const url=new URL("Declaracao_volume_embalagens.xlsx",window.location.href);
+const url=new URL("Declaracao_volume_embalagens_modelo.xlsx",window.location.href);
 const response=await fetch(url,{cache:"no-store"});
 
 if(!response.ok)
@@ -357,7 +360,7 @@ ws[cell]={t:"n",v:Number(v)};
 
 XLSX.writeFile(
 workbook,
-"Declaracao_volume_embalagens.xlsx",
+"Declaracao_volume_embalagens_preenchida.xlsx",
 {bookType:"xlsx",compression:true}
 );
 
