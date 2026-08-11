@@ -3,1885 +3,389 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Declaração de Volumes</title>
-
 <style>
-
-:root{
-    --bg:#f4f7f9;
-    --card:#ffffff;
-    --text:#17324d;
-    --muted:#6b7b8c;
-    --primary:#087f5b;
-    --primary2:#0b9a70;
-    --border:#dfe7ed;
-    --danger:#c0392b;
-    --shadow:0 10px 30px rgba(25,55,80,.08);
-}
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    background:var(--bg);
-    font-family:Arial,Helvetica,sans-serif;
-    color:var(--text);
-}
-
-.container{
-    max-width:1050px;
-    margin:35px auto;
-    padding:0 20px;
-}
-
-.header{
-    background:linear-gradient(135deg,#0b6b50,#0b9a70);
-    color:#fff;
-    border-radius:18px;
-    padding:28px 30px;
-    box-shadow:var(--shadow);
-}
-
-.header h1{
-    margin:0 0 8px;
-    font-size:28px;
-}
-
-.header p{
-    margin:0;
-    opacity:.9;
-}
-
-.card{
-    background:var(--card);
-    margin-top:18px;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:24px;
-    box-shadow:var(--shadow);
-}
-
-.step{
-    font-size:13px;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    color:var(--primary);
-    font-weight:bold;
-    margin-bottom:7px;
-}
-
-h2{
-    margin:0 0 18px;
-    font-size:21px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-}
-
-.field label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:7px;
-    font-size:14px;
-}
-
-.field input,
-.field select{
-    width:100%;
-    padding:12px 13px;
-    border:1px solid #ccd8e0;
-    border-radius:10px;
-    font-size:15px;
-    background:#fff;
-}
-
-.field input:focus,
-.field select:focus{
-    outline:2px solid rgba(8,127,91,.18);
-    border-color:var(--primary);
-}
-
-.materials{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.material{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    padding:12px 14px;
-    border:1px solid var(--border);
-    border-radius:11px;
-    background:#fbfcfd;
-}
-
-.material span{
-    font-weight:600;
-    font-size:14px;
-}
-
-.material input{
-    width:135px;
-    text-align:right;
-    padding:10px;
-    border:1px solid #ccd8e0;
-    border-radius:8px;
-}
-
-.actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:20px;
-}
-
-.btn{
-    border:0;
-    border-radius:10px;
-    padding:12px 17px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.primary{
-    background:var(--primary);
-    color:#fff;
-}
-
-.primary:hover{
-    background:var(--primary2);
-}
-
-.secondary{
-    background:#eef3f6;
-    color:var(--text);
-}
-
-.danger{
-    background:#fff0ee;
-    color:var(--danger);
-}
-
-.summary{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:#f0faf6;
-    border:1px solid #cdeee2;
-    padding:14px 16px;
-    border-radius:11px;
-    margin-top:18px;
-}
-
-.summary strong{
-    font-size:18px;
-}
-
-.states{
-    margin-top:14px;
-}
-
-.state-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:12px 14px;
-    margin-bottom:8px;
-    background:#fff;
-}
-
-.state-info{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    flex-wrap:wrap;
-}
-
-.badge{
-    background:#e5f7f0;
-    color:#087f5b;
-    border-radius:20px;
-    padding:5px 9px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.state-year{
-    background:#e7f6f0;
-    color:#087f5b;
-    border-radius:7px;
-    padding:4px 7px;
-    font-size:11px;
-    font-weight:800;
-}
-
-.empty{
-    color:var(--muted);
-    padding:10px 0;
-}
-
-.notice{
-    padding:12px 14px;
-    border-radius:10px;
-    margin-top:12px;
-    display:none;
-}
-
-.error{
-    background:#fff0ee;
-    color:#a93226;
-}
-
-.ok{
-    background:#eefaf5;
-    color:#087f5b;
-}
-
-.progress{
-    height:9px;
-    background:#e5ebef;
-    border-radius:10px;
-    overflow:hidden;
-    margin-top:10px;
-}
-
-.bar{
-    height:100%;
-    background:var(--primary);
-    width:0%;
-    transition:.25s;
-}
-
-.year-section{
-    margin-top:18px;
-    border:1px solid var(--border);
-    border-radius:14px;
-    overflow:hidden;
-    background:#fff;
-}
-
-.year-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 16px;
-    background:#f0faf6;
-    border-bottom:1px solid #cdeee2;
-}
-
-.year-title{
-    font-size:17px;
-    font-weight:800;
-    color:var(--primary);
-}
-
-.year-total{
-    font-size:13px;
-    color:var(--muted);
-    font-weight:600;
-}
-
-.year-states{
-    padding:12px;
-}
-
-.footer{
-    text-align:center;
-    color:var(--muted);
-    font-size:12px;
-    padding:22px;
-}
-
-@media(max-width:700px){
-
-    .grid,
-    .materials{
-        grid-template-columns:1fr;
-    }
-
-    .container{
-        margin-top:15px;
-    }
-
-    .header{
-        padding:22px;
-    }
-
-    .card{
-        padding:18px;
-    }
-
-    .material input{
-        width:115px;
-    }
-
-    .state-row{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-}
-
+:root{--bg:#f4f7f9;--card:#fff;--text:#17324d;--muted:#6b7b8c;--primary:#087f5b;--primary2:#0b9a70;--border:#dfe7ed;--danger:#c0392b;--shadow:0 10px 30px rgba(25,55,80,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--text)}
+.container{max-width:1050px;margin:35px auto;padding:0 20px}
+.header{background:linear-gradient(135deg,#0b6b50,#0b9a70);color:#fff;border-radius:18px;padding:28px 30px;box-shadow:var(--shadow)}
+.header h1{margin:0 0 8px;font-size:28px}.header p{margin:0;opacity:.9}
+.card{background:var(--card);margin-top:18px;border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.step{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);font-weight:bold;margin-bottom:7px}
+h2{margin:0 0 18px;font-size:21px}
+.grid,.materials{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field label{display:block;font-weight:bold;margin-bottom:7px;font-size:14px}
+.field input,.field select{width:100%;padding:12px 13px;border:1px solid #ccd8e0;border-radius:10px;font-size:15px;background:#fff}
+.field input:focus,.field select:focus{outline:2px solid rgba(8,127,91,.18);border-color:var(--primary)}
+.material{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 14px;border:1px solid var(--border);border-radius:11px;background:#fbfcfd}
+.material span{font-weight:600;font-size:14px}.material input{width:135px;text-align:right;padding:10px;border:1px solid #ccd8e0;border-radius:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:bold;cursor:pointer}.btn:disabled{opacity:.6;cursor:not-allowed}
+.primary{background:var(--primary);color:#fff}.primary:hover{background:var(--primary2)}
+.secondary{background:#eef3f6;color:var(--text)}.danger{background:#fff0ee;color:var(--danger)}
+.summary{display:flex;justify-content:space-between;align-items:center;background:#f0faf6;border:1px solid #cdeee2;padding:14px 16px;border-radius:11px;margin-top:18px}
+.summary strong{font-size:18px}.states{margin-top:14px}.empty{color:var(--muted);padding:10px 0}
+.notice{padding:12px 14px;border-radius:10px;margin-top:12px;display:none}.error{background:#fff0ee;color:#a93226}.ok{background:#eefaf5;color:#087f5b}
+.progress{height:9px;background:#e5ebef;border-radius:10px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--primary);width:0%;transition:.25s}
+.year-section{margin-top:18px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}
+.year-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f0faf6;border-bottom:1px solid #cdeee2}
+.year-title{font-size:17px;font-weight:800;color:var(--primary)}.year-total{font-size:13px;color:var(--muted);font-weight:600}
+.year-states{padding:12px}.state-row{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.state-info{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.badge,.state-year{background:#e5f7f0;color:var(--primary);border-radius:7px;padding:4px 8px;font-size:11px;font-weight:bold}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:700px){.grid,.materials{grid-template-columns:1fr}.container{margin-top:15px}.header{padding:22px}.card{padding:18px}.material input{width:115px}.state-row{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-    <!-- CABEÇALHO -->
-
-    <div class="header">
-
-        <h1>Declaração de Volumes</h1>
-
-        <p>
-            Preencha os dados por estado.
-            Ao finalizar, o arquivo Excel será gerado no padrão de importação.
-        </p>
-
-    </div>
-
-
-    <!-- ETAPA 1 -->
-
-    <div class="card">
-
-        <div class="step">
-            Etapa 1
-        </div>
-
-        <h2>
-            Ano de compensação
-        </h2>
-
-        <div class="field" style="max-width:320px">
-
-            <label for="year">
-                Ano
-            </label>
-
-            <select id="year"></select>
-
-        </div>
-
-        <div
-            class="notice error"
-            id="yearError">
-        </div>
-
-    </div>
-
-
-    <!-- ETAPA 2 -->
-
-    <div class="card">
-
-        <div class="step">
-            Etapa 2
-        </div>
-
-        <h2>
-            Informar estado
-        </h2>
-
-        <div class="grid">
-
-            <div class="field">
-
-                <label for="state">
-                    Estado
-                </label>
-
-                <select id="state"></select>
-
-            </div>
-
-        </div>
-
-
-        <div style="margin-top:20px">
-
-            <label
-                style="
-                    font-weight:bold;
-                    font-size:14px;
-                    display:block;
-                    margin-bottom:10px;
-                "
-            >
-                Peso gerado (Ton.)
-            </label>
-
-            <div
-                class="materials"
-                id="materials">
-            </div>
-
-        </div>
-
-
-        <div class="summary">
-
-            <span>
-                Total do estado
-            </span>
-
-            <strong id="total">
-                0,00 t
-            </strong>
-
-        </div>
-
-
-        <div class="actions">
-
-            <button
-                class="btn primary"
-                id="add"
-            >
-                ＋ Adicionar estado
-            </button>
-
-            <button
-                class="btn secondary"
-                id="clear"
-            >
-                Limpar campos
-            </button>
-
-        </div>
-
-
-        <div
-            class="notice error"
-            id="formError">
-        </div>
-
-    </div>
-
-
-    <!-- ETAPA 3 -->
-
-    <div class="card">
-
-        <div class="step">
-            Etapa 3
-        </div>
-
-        <h2>
-            Estados preenchidos
-        </h2>
-
-        <div>
-            <strong id="count">
-                0 de 27 estados
-            </strong>
-        </div>
-
-        <div class="progress">
-
-            <div
-                class="bar"
-                id="bar">
-            </div>
-
-        </div>
-
-        <div
-            class="states"
-            id="states">
-        </div>
-
-    </div>
-
-
-    <!-- ETAPA 4 -->
-
-    <div class="card">
-
-        <div class="step">
-            Etapa 4
-        </div>
-
-        <h2>
-            Finalizar
-        </h2>
-
-        <p style="color:var(--muted)">
-
-            Revise os estados informados e gere o arquivo Excel
-            para envio ao sistema.
-
-        </p>
-
-
-        <div class="actions">
-
-            <button
-                class="btn primary"
-                id="export"
-            >
-                ⬇ Gerar Excel para o sistema
-            </button>
-
-        </div>
-
-
-        <div
-            class="notice ok"
-            id="success">
-        </div>
-
-
-        <div
-            style="
-                margin-top:12px;
-                color:var(--muted);
-                font-size:13px;
-            "
-        >
-
-            O arquivo modelo precisa estar no mesmo diretório
-            deste HTML:
-
-            <strong>
-                Declaracao_volume_embalagens_modelo.xlsx
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer">
-
-        Declaração de Volumes
-
-    </div>
-
+<div class="header">
+<h1>Declaração de Volumes</h1>
+<p>Preencha os dados por estado. Ao finalizar, o arquivo Excel será gerado no padrão de importação.</p>
 </div>
 
+<div class="card">
+<div class="step">Etapa 1</div>
+<h2>Ano de compensação</h2>
+<div class="field" style="max-width:320px">
+<label for="year">Ano</label>
+<select id="year"></select>
+</div>
+</div>
 
-<!--
-===========================================================
-BIBLIOTECA SHEETJS
-===========================================================
--->
+<div class="card">
+<div class="step">Etapa 2</div>
+<h2>Informar estado</h2>
+<div class="grid">
+<div class="field">
+<label for="state">Estado</label>
+<select id="state"></select>
+</div>
+</div>
+
+<div style="margin-top:20px">
+<label style="font-weight:bold;font-size:14px;display:block;margin-bottom:10px">Peso gerado (Ton.)</label>
+<div class="materials" id="materials"></div>
+</div>
+
+<div class="summary">
+<span>Total do estado</span>
+<strong id="total">0,00 t</strong>
+</div>
+
+<div class="actions">
+<button class="btn primary" id="add">＋ Adicionar estado</button>
+<button class="btn secondary" id="clear">Limpar campos</button>
+</div>
+
+<div class="notice error" id="formError"></div>
+</div>
+
+<div class="card">
+<div class="step">Etapa 3</div>
+<h2>Estados preenchidos</h2>
+<div><strong id="count">0 estados preenchidos</strong></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="states" id="states"></div>
+</div>
+
+<div class="card">
+<div class="step">Etapa 4</div>
+<h2>Finalizar</h2>
+<p style="color:var(--muted)">Revise os estados informados e gere o arquivo Excel para envio ao sistema.</p>
+<div class="actions">
+<button class="btn primary" id="export">⬇ Gerar Excel para o sistema</button>
+</div>
+<div class="notice ok" id="success"></div>
+<div style="margin-top:12px;color:var(--muted);font-size:13px">
+O arquivo modelo deve estar no mesmo diretório:
+<strong>Declaracao_volume_embalagens_modelo.xlsx</strong>
+</div>
+</div>
+
+<div class="footer">Declaração de Volumes</div>
+</div>
 
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-
-
 <script>
+const YEARS=[2019,2020,2021,2022,2023,2024,2025,2026];
 
-/*
-===========================================================
-CONFIGURAÇÕES
-===========================================================
-*/
-
-
-const YEARS = [
-    2019,
-    2020,
-    2021,
-    2022,
-    2023,
-    2024,
-    2025,
-    2026
+const STATES=[
+"AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT",
+"PA","PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"
 ];
 
-
-const STATES = [
-
-    "AC",
-    "AL",
-    "AM",
-    "AP",
-    "BA",
-    "CE",
-    "DF",
-    "ES",
-    "GO",
-    "MA",
-    "MG",
-    "MS",
-    "MT",
-    "PA",
-    "PB",
-    "PE",
-    "PI",
-    "PR",
-    "RJ",
-    "RN",
-    "RO",
-    "RR",
-    "RS",
-    "SC",
-    "SE",
-    "SP",
-    "TO"
-
+const MATERIALS=[
+"PAPEL/PAPELÃO","PLÁSTICO","VIDRO","AÇO/FERRO","ALUMÍNIO",
+"LONGA VIDA","ISOPOR","BOPP","AEROSSOL","OUTRO MATERIAL"
 ];
 
+const data={};
+const year=document.getElementById("year");
+const state=document.getElementById("state");
+const materials=document.getElementById("materials");
+const total=document.getElementById("total");
+const states=document.getElementById("states");
+const count=document.getElementById("count");
+const bar=document.getElementById("bar");
+const add=document.getElementById("add");
+const exportBtn=document.getElementById("export");
+let editingState=null;
 
-const MATERIALS = [
-
-    "PAPEL/PAPELÃO",
-    "PLÁSTICO",
-    "VIDRO",
-    "AÇO/FERRO",
-    "ALUMÍNIO",
-    "LONGA VIDA",
-    "ISOPOR",
-    "BOPP",
-    "AEROSSOL",
-    "OUTRO MATERIAL"
-
-];
-
-
-/*
-===========================================================
-ESTRUTURA DOS DADOS
-===========================================================
-*/
-
-
-const data = {};
-
-
-/*
-===========================================================
-ELEMENTOS DA TELA
-===========================================================
-*/
-
-
-const year =
-    document.getElementById("year");
-
-const state =
-    document.getElementById("state");
-
-const materialsBox =
-    document.getElementById("materials");
-
-const totalEl =
-    document.getElementById("total");
-
-const statesBox =
-    document.getElementById("states");
-
-const countEl =
-    document.getElementById("count");
-
-const bar =
-    document.getElementById("bar");
-
-const exportButton =
-    document.getElementById("export");
-
-
-let editingState = null;
-
-
-/*
-===========================================================
-POPULAR ANOS
-===========================================================
-*/
-
-
-YEARS.forEach(function(y){
-
-    const option =
-        document.createElement("option");
-
-    option.value = y;
-
-    option.textContent = y;
-
-    year.appendChild(option);
-
+YEARS.forEach(y=>{
+const o=document.createElement("option");
+o.value=y;o.textContent=y;year.appendChild(o);
 });
 
-
-/*
-===========================================================
-POPULAR ESTADOS
-===========================================================
-*/
-
-
-STATES.forEach(function(s){
-
-    const option =
-        document.createElement("option");
-
-    option.value = s;
-
-    option.textContent = s;
-
-    state.appendChild(option);
-
+STATES.forEach(s=>{
+const o=document.createElement("option");
+o.value=s;o.textContent=s;state.appendChild(o);
 });
 
-
-/*
-===========================================================
-CRIAR CAMPOS DOS MATERIAIS
-===========================================================
-*/
-
-
-MATERIALS.forEach(function(material,index){
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        "material";
-
-
-    div.innerHTML = `
-
-        <span>
-            ${material}
-        </span>
-
-        <input
-            type="text"
-            inputmode="decimal"
-            data-index="${index}"
-            placeholder="0,00"
-            value="0"
-        >
-
-    `;
-
-
-    materialsBox.appendChild(div);
-
+MATERIALS.forEach((m,i)=>{
+const d=document.createElement("div");
+d.className="material";
+d.innerHTML=`<span>${m}</span><input type="text" inputmode="decimal" data-index="${i}" placeholder="0,00" value="0">`;
+materials.appendChild(d);
 });
 
-
-/*
-===========================================================
-CONVERTER TEXTO PARA NÚMERO
-===========================================================
-*/
-
-
-function parseNumber(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-
-        return 0;
-
-    }
-
-
-    let text =
-        String(value).trim();
-
-
-    /*
-    Permite:
-
-    10
-    10,5
-    10.5
-    1.000,50
-    */
-
-
-    if(
-        text.includes(",") &&
-        text.includes(".")
-    ){
-
-        text =
-            text.replace(/\./g,"")
-                 .replace(",", ".");
-
-    }
-
-    else if(
-        text.includes(",")
-    ){
-
-        text =
-            text.replace(",", ".");
-
-    }
-
-
-    const number =
-        Number(text);
-
-
-    return isNaN(number)
-        ? 0
-        : number;
-
+function num(v){
+if(v===null||v===undefined||v==="")return 0;
+v=String(v).trim();
+if(v.includes(",")&&v.includes("."))v=v.replace(/\./g,"").replace(",",".");
+else if(v.includes(","))v=v.replace(",",".");
+const n=Number(v);
+return isNaN(n)?0:n;
 }
 
-
-/*
-===========================================================
-FORMATAR NÚMERO
-===========================================================
-*/
-
-
-function formatNumber(value){
-
-    return value.toLocaleString(
-        "pt-BR",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
-
+function fmt(v){
+return v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
-
-/*
-===========================================================
-PEGAR VALORES DOS MATERIAIS
-===========================================================
-*/
-
-
-function getValues(){
-
-    return [
-        ...materialsBox.querySelectorAll("input")
-    ].map(function(input){
-
-        return parseNumber(input.value);
-
-    });
-
+function values(){
+return [...materials.querySelectorAll("input")].map(i=>num(i.value));
 }
 
-
-/*
-===========================================================
-MOSTRAR ERRO
-===========================================================
-*/
-
-
-function showError(message){
-
-    const error =
-        document.getElementById("formError");
-
-
-    error.textContent =
-        message;
-
-
-    error.style.display =
-        "block";
-
-
-    setTimeout(function(){
-
-        error.style.display =
-            "none";
-
-    },4000);
-
+function error(msg){
+const e=document.getElementById("formError");
+e.textContent=msg;e.style.display="block";
+setTimeout(()=>e.style.display="none",4000);
 }
-
-
-/*
-===========================================================
-LIMPAR CAMPOS
-===========================================================
-*/
-
 
 function clearFields(){
-
-    materialsBox
-        .querySelectorAll("input")
-        .forEach(function(input){
-
-            input.value = "0";
-
-        });
-
-
-    editingState =
-        null;
-
-
-    document.getElementById("add")
-        .textContent =
-        "＋ Adicionar estado";
-
-
-    totalEl.textContent =
-        "0,00 t";
-
+materials.querySelectorAll("input").forEach(i=>i.value="0");
+editingState=null;
+add.textContent="＋ Adicionar estado";
+total.textContent="0,00 t";
 }
-
-
-/*
-===========================================================
-ATUALIZAR TOTAL
-===========================================================
-*/
-
 
 function updateTotal(){
-
-    const values =
-        getValues();
-
-
-    const total =
-        values.reduce(
-            function(sum,value){
-                return sum + value;
-            },
-            0
-        );
-
-
-    totalEl.textContent =
-        formatNumber(total) + " t";
-
+total.textContent=fmt(values().reduce((a,b)=>a+b,0))+" t";
 }
 
-
-/*
-===========================================================
-RENDERIZAR ESTADOS POR ANO
-===========================================================
-*/
-
-
-function renderStates(){
-
-    statesBox.innerHTML = "";
-
-
-    const yearsWithData =
-        YEARS.filter(function(y){
-
-            return data[y] &&
-                   Object.keys(data[y]).length > 0;
-
-        });
-
-
-    const totalStates =
-        yearsWithData.reduce(
-            function(total,y){
-
-                return total +
-                    Object.keys(data[y]).length;
-
-            },
-            0
-        );
-
-
-    countEl.textContent =
-        totalStates +
-        " estado" +
-        (totalStates === 1 ? "" : "s") +
-        " preenchido" +
-        (totalStates === 1 ? "" : "s") +
-        " em " +
-        yearsWithData.length +
-        " ano" +
-        (yearsWithData.length === 1 ? "" : "s");
-
-
-    /*
-    Barra de progresso baseada no ano selecionado
-    */
-
-
-    const currentYearCount =
-        data[year.value]
-            ? Object.keys(data[year.value]).length
-            : 0;
-
-
-    bar.style.width =
-        ((currentYearCount / 27) * 100) + "%";
-
-
-    if(yearsWithData.length === 0){
-
-        statesBox.innerHTML = `
-
-            <div class="empty">
-                Nenhum estado informado ainda.
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    /*
-    Criar uma seção visual para cada ano
-    */
-
-
-    yearsWithData.forEach(function(y){
-
-        const yearSection =
-            document.createElement("div");
-
-
-        yearSection.className =
-            "year-section";
-
-
-        const yearStates =
-            data[y];
-
-
-        const stateKeys =
-            Object.keys(yearStates);
-
-
-        const yearTotal =
-            stateKeys.reduce(
-                function(sum,s){
-
-                    return sum +
-                        yearStates[s].reduce(
-                            function(a,b){
-                                return a+b;
-                            },
-                            0
-                        );
-
-                },
-                0
-            );
-
-
-        /*
-        Cabeçalho do ano
-        */
-
-
-        const header =
-            document.createElement("div");
-
-
-        header.className =
-            "year-header";
-
-
-        header.innerHTML = `
-
-            <span class="year-title">
-
-                Ano de compensação: ${y}
-
-            </span>
-
-            <span class="year-total">
-
-                ${stateKeys.length}
-                estado${stateKeys.length === 1 ? "" : "s"}
-
-                • ${formatNumber(yearTotal)} t
-
-            </span>
-
-        `;
-
-
-        yearSection.appendChild(header);
-
-
-        /*
-        Lista dos estados
-        */
-
-
-        const list =
-            document.createElement("div");
-
-
-        list.className =
-            "year-states";
-
-
-        stateKeys.forEach(function(s){
-
-            const values =
-                yearStates[s];
-
-
-            const total =
-                values.reduce(
-                    function(a,b){
-                        return a+b;
-                    },
-                    0
-                );
-
-
-            const row =
-                document.createElement("div");
-
-
-            row.className =
-                "state-row";
-
-
-            row.innerHTML = `
-
-                <div class="state-info">
-
-                    <span class="badge">
-                        ✓
-                    </span>
-
-                    <strong>
-                        ${s}
-                    </strong>
-
-                    <span class="state-year">
-                        ${y}
-                    </span>
-
-                    <span style="color:#6b7b8c">
-
-                        ${formatNumber(total)} t
-
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="actions"
-                    style="margin:0"
-                >
-
-                    <button
-                        class="btn secondary"
-                        data-edit-year="${y}"
-                        data-edit="${s}"
-                    >
-                        Editar
-                    </button>
-
-                    <button
-                        class="btn danger"
-                        data-del-year="${y}"
-                        data-del="${s}"
-                    >
-                        Remover
-                    </button>
-
-                </div>
-
-            `;
-
-
-            list.appendChild(row);
-
-        });
-
-
-        yearSection.appendChild(list);
-
-        statesBox.appendChild(yearSection);
-
-    });
-
-
-    /*
-    Botões EDITAR
-    */
-
-
-    statesBox
-        .querySelectorAll("[data-edit]")
-        .forEach(function(button){
-
-            button.onclick =
-                function(){
-
-                    year.value =
-                        button.dataset.editYear;
-
-
-                    loadState(
-                        button.dataset.edit
-                    );
-
-
-                    renderStates();
-
-                };
-
-        });
-
-
-    /*
-    Botões REMOVER
-    */
-
-
-    statesBox
-        .querySelectorAll("[data-del]")
-        .forEach(function(button){
-
-            button.onclick =
-                function(){
-
-                    const selectedYear =
-                        button.dataset.delYear;
-
-
-                    const selectedState =
-                        button.dataset.del;
-
-
-                    delete data[
-                        selectedYear
-                    ][
-                        selectedState
-                    ];
-
-
-                    if(
-                        Object.keys(
-                            data[selectedYear]
-                        ).length === 0
-                    ){
-
-                        delete data[
-                            selectedYear
-                        ];
-
-                    }
-
-
-                    renderStates();
-
-                };
-
-        });
-
+function render(){
+states.innerHTML="";
+const years=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
+const totalStates=years.reduce((n,y)=>n+Object.keys(data[y]).length,0);
+
+count.textContent=`${totalStates} estado${totalStates===1?"":"s"} preenchido${totalStates===1?"":"s"} em ${years.length} ano${years.length===1?"":"s"}`;
+
+const current=data[year.value]?Object.keys(data[year.value]).length:0;
+bar.style.width=(current/27*100)+"%";
+
+if(!years.length){
+states.innerHTML='<div class="empty">Nenhum estado informado ainda.</div>';
+return;
 }
 
+years.forEach(y=>{
+const section=document.createElement("div");
+section.className="year-section";
 
-/*
-===========================================================
-CARREGAR ESTADO PARA EDIÇÃO
-===========================================================
-*/
+const list=data[y];
+const keys=Object.keys(list);
+const yearTotal=keys.reduce((n,s)=>n+list[s].reduce((a,b)=>a+b,0),0);
 
+section.innerHTML=`
+<div class="year-header">
+<span class="year-title">Ano de compensação: ${y}</span>
+<span class="year-total">${keys.length} estado${keys.length===1?"":"s"} • ${fmt(yearTotal)} t</span>
+</div>`;
 
-function loadState(selectedState){
+const content=document.createElement("div");
+content.className="year-states";
 
-    editingState =
-        selectedState;
+keys.forEach(s=>{
+const vals=list[s];
+const t=vals.reduce((a,b)=>a+b,0);
+const row=document.createElement("div");
+row.className="state-row";
 
+row.innerHTML=`
+<div class="state-info">
+<span class="badge">✓</span>
+<strong>${s}</strong>
+<span class="state-year">${y}</span>
+<span style="color:#6b7b8c">${fmt(t)} t</span>
+</div>
+<div class="actions" style="margin:0">
+<button class="btn secondary" data-edit="${s}" data-year="${y}">Editar</button>
+<button class="btn danger" data-delete="${s}" data-year="${y}">Remover</button>
+</div>`;
 
-    state.value =
-        selectedState;
+content.appendChild(row);
+});
 
+section.appendChild(content);
+states.appendChild(section);
+});
 
-    const values =
-        data[year.value][selectedState];
+states.querySelectorAll("[data-edit]").forEach(btn=>{
+btn.onclick=()=>{
+year.value=btn.dataset.year;
+loadState(btn.dataset.edit);
+render();
+};
+});
 
-
-    materialsBox
-        .querySelectorAll("input")
-        .forEach(function(input,index){
-
-            input.value =
-                String(values[index])
-                    .replace(".",",");
-
-        });
-
-
-    document.getElementById("add")
-        .textContent =
-        "✓ Atualizar estado";
-
-
-    updateTotal();
-
-
-    window.scrollTo({
-        top:300,
-        behavior:"smooth"
-    });
-
+states.querySelectorAll("[data-delete]").forEach(btn=>{
+btn.onclick=()=>{
+const y=btn.dataset.year;
+const s=btn.dataset.delete;
+delete data[y][s];
+if(!Object.keys(data[y]).length)delete data[y];
+render();
+};
+});
 }
 
-
-/*
-===========================================================
-ALTERAÇÃO DO ANO
-===========================================================
-*/
-
-
-year.addEventListener(
-    "change",
-    function(){
-
-        clearFields();
-
-        renderStates();
-
-    }
-);
-
-
-/*
-===========================================================
-ALTERAÇÃO DOS VALORES
-===========================================================
-*/
-
-
-materialsBox.addEventListener(
-    "input",
-    updateTotal
-);
-
-
-/*
-===========================================================
-BOTÃO LIMPAR
-===========================================================
-*/
-
-
-document.getElementById("clear")
-    .addEventListener(
-        "click",
-        clearFields
-    );
-
-
-/*
-===========================================================
-ADICIONAR / ATUALIZAR ESTADO
-===========================================================
-*/
-
-
-document.getElementById("add")
-    .addEventListener(
-        "click",
-        function(){
-
-            const selectedState =
-                state.value;
-
-
-            const values =
-                getValues();
-
-
-            /*
-            Não permitir negativos
-            */
-
-
-            if(
-                values.some(
-                    function(value){
-                        return value < 0;
-                    }
-                )
-            ){
-
-                showError(
-                    "Não são permitidos valores negativos."
-                );
-
-                return;
-
-            }
-
-
-            /*
-            Pelo menos um valor
-            */
-
-
-            if(
-                values.every(
-                    function(value){
-                        return value === 0;
-                    }
-                )
-            ){
-
-                showError(
-                    "Informe pelo menos um material com valor maior que zero."
-                );
-
-                return;
-
-            }
-
-
-            /*
-            Criar estrutura do ano
-            */
-
-
-            if(
-                !data[year.value]
-            ){
-
-                data[year.value] = {};
-
-            }
-
-
-            /*
-            Impedir duplicidade
-            */
-
-
-            if(
-                !editingState &&
-                data[year.value][selectedState]
-            ){
-
-                showError(
-                    "Este estado já foi informado neste ano. Use Editar para alterar os valores."
-                );
-
-                return;
-
-            }
-
-
-            /*
-            Se mudou o estado durante edição
-            */
-
-
-            if(
-                editingState &&
-                editingState !== selectedState
-            ){
-
-                delete data[
-                    year.value
-                ][
-                    editingState
-                ];
-
-            }
-
-
-            /*
-            Salvar dados
-            */
-
-
-            data[
-                year.value
-            ][
-                selectedState
-            ] = values;
-
-
-            clearFields();
-
-            renderStates();
-
-        }
-    );
-
-
-/*
-===========================================================
-EXPORTAÇÃO DO EXCEL
-===========================================================
-*/
-
+function loadState(s){
+editingState=s;
+state.value=s;
+data[year.value][s].forEach((v,i)=>{
+materials.querySelectorAll("input")[i].value=String(v).replace(".",",");
+});
+add.textContent="✓ Atualizar estado";
+updateTotal();
+window.scrollTo({top:300,behavior:"smooth"});
+}
+
+year.onchange=()=>{
+clearFields();
+render();
+};
+
+materials.oninput=updateTotal;
+
+document.getElementById("clear").onclick=clearFields;
+
+add.onclick=()=>{
+const s=state.value;
+const vals=values();
+
+if(vals.some(v=>v<0)){
+error("Não são permitidos valores negativos.");
+return;
+}
+
+if(vals.every(v=>v===0)){
+error("Informe pelo menos um material com valor maior que zero.");
+return;
+}
+
+data[year.value]??={};
+
+if(!editingState&&data[year.value][s]){
+error("Este estado já foi informado neste ano. Use Editar para alterar os valores.");
+return;
+}
+
+if(editingState&&editingState!==s)delete data[year.value][editingState];
+
+data[year.value][s]=vals;
+clearFields();
+render();
+};
 
 async function exportExcel(){
-
-    const yearsWithData =
-        YEARS.filter(function(y){
-
-            return data[y] &&
-                   Object.keys(data[y]).length > 0;
-
-        });
-
-
-    /*
-    Verificar se existe informação
-    */
-
-
-    if(
-        yearsWithData.length === 0
-    ){
-
-        showError(
-            "Adicione pelo menos um estado antes de gerar o Excel."
-        );
-
-        return;
-
-    }
-
-
-    exportButton.disabled =
-        true;
-
-
-    exportButton.textContent =
-        "⏳ Gerando Excel...";
-
-
-    try{
-
-        /*
-        Verificar biblioteca
-        */
-
-
-        if(
-            typeof XLSX === "undefined"
-        ){
-
-            throw new Error(
-                "A biblioteca Excel não foi carregada. Verifique sua conexão com a internet."
-            );
-
-        }
-
-
-        /*
-        ===================================================
-        IMPORTANTE PARA GITHUB PAGES
-        ===================================================
-
-        O Excel precisa estar no mesmo diretório
-        do HTML.
-
-        Nome exato:
-
-        Declaracao_volume_embalagens_modelo.xlsx
-        */
-
-
-        const modelUrl =
-            new URL(
-                "Declaracao_volume_embalagens_modelo.xlsx",
-                window.location.href
-            ).href;
-
-
-        const response =
-            await fetch(
-                modelUrl,
-                {
-                    cache:"no-store"
-                }
-            );
-
-
-        if(
-            !response.ok
-        ){
-
-            throw new Error(
-                "O arquivo modelo do Excel não foi encontrado."
-            );
-
-        }
-
-
-        /*
-        Ler arquivo
-        */
-
-
-        const buffer =
-            await response.arrayBuffer();
-
-
-        const workbook =
-            XLSX.read(
-                buffer,
-                {
-                    type:"array",
-                    cellStyles:true
-                }
-            );
-
-
-        /*
-        ===================================================
-        PREENCHER CADA GUIA
-        ===================================================
-        */
-
-
-        yearsWithData.forEach(
-            function(selectedYear){
-
-                const sheetName =
-                    String(selectedYear);
-
-
-                const worksheet =
-                    workbook.Sheets[
-                        sheetName
-                    ];
-
-
-                /*
-                Verificar se a guia existe
-                */
-
-
-                if(!worksheet){
-
-                    throw new Error(
-                        `A guia "${sheetName}" não existe no modelo Excel.`
-                    );
-
-                }
-
-
-                /*
-                Cada estado
-                */
-
-
-                Object.entries(
-                    data[selectedYear]
-                ).forEach(
-                    function([
-                        stateName,
-                        values
-                    ]){
-
-                        /*
-                        Encontrar linha do estado
-
-                        A5 = primeiro estado
-
-                        Portanto:
-
-                        índice 0 → linha 5
-                        índice 1 → linha 6
-                        etc.
-                        */
-
-
-                        const stateIndex =
-                            STATES.indexOf(
-                                stateName
-                            );
-
-
-                        if(
-                            stateIndex === -1
-                        ){
-
-                            throw new Error(
-                                `Estado "${stateName}" não encontrado.`
-                            );
-
-                        }
-
-
-                        const row =
-                            stateIndex + 5;
-
-
-                        /*
-                        Materiais
-
-                        B = coluna 2
-                        C = coluna 3
-                        ...
-                        K = coluna 11
-                        */
-
-
-                        values.forEach(
-                            function(value,index){
-
-                                const cell =
-                                    XLSX.utils.encode_cell({
-
-                                        r:row - 1,
-
-                                        c:index + 1
-
-                                    });
-
-
-                                worksheet[cell] = {
-
-                                    t:"n",
-
-                                    v:Number(value)
-
-                                };
-
-                            }
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-        /*
-        ===================================================
-        GERAR ARQUIVO
-        ===================================================
-        */
-
-
-        const filename =
-            "Declaracao_volume_embalagens_preenchida.xlsx";
-
-
-        XLSX.writeFile(
-            workbook,
-            filename,
-            {
-                bookType:"xlsx",
-                compression:true
-            }
-        );
-
-
-        /*
-        Mensagem de sucesso
-        */
-
-
-        const success =
-            document.getElementById(
-                "success"
-            );
-
-
-        success.textContent =
-            "Excel gerado com sucesso: " +
-            filename;
-
-
-        success.style.display =
-            "block";
-
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Erro ao gerar Excel:",
-            error
-        );
-
-
-        showError(
-            "Não foi possível gerar o Excel: " +
-            error.message
-        );
-
-    }
-
-    finally{
-
-        exportButton.disabled =
-            false;
-
-
-        exportButton.textContent =
-            "⬇ Gerar Excel para o sistema";
-
-    }
-
+const years=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
+
+if(!years.length){
+error("Adicione pelo menos um estado antes de gerar o Excel.");
+return;
 }
 
+exportBtn.disabled=true;
+exportBtn.textContent="⏳ Gerando Excel...";
 
-/*
-===========================================================
-BOTÃO EXPORTAR
-===========================================================
-*/
+try{
 
+if(typeof XLSX==="undefined")
+throw new Error("A biblioteca Excel não foi carregada.");
 
-document.getElementById("export")
-    .addEventListener(
-        "click",
-        exportExcel
-    );
+const url=new URL("Declaracao_volume_embalagens_modelo.xlsx",window.location.href);
+const response=await fetch(url,{cache:"no-store"});
 
+if(!response.ok)
+throw new Error("O arquivo modelo do Excel não foi encontrado.");
 
-/*
-===========================================================
-INICIALIZAÇÃO
-===========================================================
-*/
+const buffer=await response.arrayBuffer();
+const workbook=XLSX.read(buffer,{type:"array",cellStyles:true});
 
+years.forEach(y=>{
+const ws=workbook.Sheets[String(y)];
 
-renderStates();
+if(!ws)
+throw new Error(`A guia "${y}" não existe no modelo.`);
 
+Object.entries(data[y]).forEach(([s,vals])=>{
+const stateIndex=STATES.indexOf(s);
+
+if(stateIndex===-1)
+throw new Error(`Estado "${s}" não encontrado.`);
+
+const row=stateIndex+5;
+
+vals.forEach((v,i)=>{
+const cell=XLSX.utils.encode_cell({
+r:row-1,
+c:i+1
+});
+
+ws[cell]={t:"n",v:Number(v)};
+});
+});
+});
+
+XLSX.writeFile(
+workbook,
+"Declaracao_volume_embalagens_preenchida.xlsx",
+{bookType:"xlsx",compression:true}
+);
+
+const success=document.getElementById("success");
+success.textContent="Excel gerado com sucesso.";
+success.style.display="block";
+
+}catch(e){
+
+console.error(e);
+error("Não foi possível gerar o Excel: "+e.message);
+
+}finally{
+
+exportBtn.disabled=false;
+exportBtn.textContent="⬇ Gerar Excel para o sistema";
+
+}
+}
+
+exportBtn.onclick=exportExcel;
+
+render();
 updateTotal();
-
 </script>
-
 </body>
 </html>
 ```
