@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Declaração de Volumes</title>
+<title>Ambipar - Autodeclaração de MAssas de Logistica Reversa à Compensar</title>
 <style>
 :root{--bg:#f4f7f9;--card:#fff;--text:#17324d;--muted:#6b7b8c;--primary:#087f5b;--primary2:#0b9a70;--border:#dfe7ed;--danger:#c0392b;--shadow:0 10px 30px rgba(25,55,80,.08)}
 *{box-sizing:border-box}
@@ -41,13 +40,13 @@ h2{margin:0 0 18px;font-size:21px}
 <body>
 <div class="container">
 <div class="header">
-<h1>Declaração de Volumes</h1>
+<h1>Ambipar - Autodeclaração de Massas de Logistica Reversa à Compensar</h1>
 <p>Preencha os dados por estado. Ao finalizar, o arquivo Excel será gerado no padrão de importação.</p>
 </div>
 
 <div class="card">
 <div class="step">Etapa 1</div>
-<h2>Ano de compensação</h2>
+<h2>Ano de compensação (Periodo a ser compensado)</h2>
 <div class="field" style="max-width:320px">
 <label for="year">Ano</label>
 <select id="year"></select>
@@ -93,18 +92,17 @@ h2{margin:0 0 18px;font-size:21px}
 <div class="card">
 <div class="step">Etapa 4</div>
 <h2>Finalizar</h2>
-<p style="color:var(--muted)">Revise os estados informados e gere o arquivo Excel para envio ao sistema.</p>
+<p style="color:var(--muted)">Revise as informações preenchidase gere o relatório.</p>
 <div class="actions">
-<button class="btn primary" id="export">⬇ Gerar Excel para o sistema</button>
+<button class="btn primary" id="export">⬇ Gerar Relatório</button>
 </div>
 <div class="notice ok" id="success"></div>
 <div style="margin-top:12px;color:var(--muted);font-size:13px">
-O arquivo modelo deve estar no mesmo diretório:
-<strong>Declaracao_volume_embalagens_modelo.xlsx</strong>
+<strong>As informações passadas </strong>
 </div>
 </div>
 
-<div class="footer">Declaração de Volumes</div>
+<div class="footer">Ambipar - Autodeclaração de Massas de Logistica Reversa à Compensar</div>
 </div>
 
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
