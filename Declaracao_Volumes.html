@@ -109,9 +109,9 @@ h2{margin:0 0 18px;font-size:21px}
   
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
-const YEARS=[2019,2020,2021,2022,2023,2024,2025,2026,2027];
+const YEARS=["Selecione",2019,2020,2021,2022,2023,2024,2025,2026,2027];
 
-const STATES=[
+const STATES=["Selecione",
 "AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT",
 "PA","PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"
 ];
@@ -313,6 +313,16 @@ const years=YEARS.filter(y=>data[y]&&Object.keys(data[y]).length);
 
 if(!years.length){
 error("Adicione pelo menos um estado antes de gerar o Excel.");
+return;
+}
+
+if(!years.length(v="Selecione"){
+error("Adicione pelo menos um ano antes de seguir.");
+return;
+}
+
+if(!states.length(v="Selecione"){
+error("Adicione pelo menos um estado antes de seguir.");
 return;
 }
 
